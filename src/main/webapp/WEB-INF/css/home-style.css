@@ -1,0 +1,23 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.42em;
+    color:#A7A1AE;
+    background-color:#1F2739;
+}
+.container {
+    padding-top: 200px;
+    width: 500px;
+    margin: auto;
+}
+.button {
+    margin-top: 25px;
+    width: 80%;
+    border: 0;
+    background-color: #53CACE;
+    border-radius: 5px;
+    height: 50px;
+    color: white;
+    font-weight: 400;
+    font-size: 1em;
+}
