@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.stereotype.Component;
 import ru.zagorodnikova.tm.entity.enumeration.RoleType;
 import ru.zagorodnikova.tm.util.PasswordUtil;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Component
 @NoArgsConstructor
 public class User {
 

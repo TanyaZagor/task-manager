@@ -1,7 +1,10 @@
 package ru.zagorodnikova.tm.repository;
 
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.zagorodnikova.tm.api.repository.ITaskRepository;
 import ru.zagorodnikova.tm.entity.Task;
 
@@ -10,22 +13,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+@Component
+@NoArgsConstructor
 public class TaskRepository implements ITaskRepository {
-
-    private static TaskRepository instance = null;
-
     @NotNull
     private final Map<String, Task> tasks = new LinkedHashMap<>();
 
-    private TaskRepository() {
-    }
-
-    public static TaskRepository getInstance() {
-        if (instance == null) {
-            instance = new TaskRepository();
-        }
-        return instance;
-    }
 
     @Nullable
     @Override

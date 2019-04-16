@@ -43,7 +43,7 @@
         <td align="left"> <%= DateFormatterUtil.dateFormatter(task.getDateFinish()) %> </td>
         <td align="left"> <%= task.getStatus() %> </td>
         <td class="toHover">
-            <a href="task-edit?id=<%=task.getId()%>">
+            <a href="task-update?id=<%=task.getId()%>">
                 <i class="material-icons" style="font-size:48px;color:#45D09E" align = "center">border_color</i>
             </a>
         </td>

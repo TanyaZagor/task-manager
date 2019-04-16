@@ -35,7 +35,7 @@
         <td align="left"> <%= DateFormatterUtil.dateFormatter(task.getDateFinish()) %> </td>
         <td align="left"> <%= task.getStatus() %> </td>
     </tr>
-    <form action="task-edit" method="POST">
+    <form action="task-update" method="POST">
         <tr>
             <td align="left">
                 <input class="input" type='text' placeholder='Name' name="name"/>

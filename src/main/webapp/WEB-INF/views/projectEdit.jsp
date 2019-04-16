@@ -34,7 +34,7 @@
         <td align="left"> <%= DateFormatterUtil.dateFormatter(project.getDateFinish()) %> </td>
         <td align="left"> <%= project.getStatus() %> </td>
     </tr>
-    <form action="project-edit" method="POST">
+    <form action="project-update" method="POST">
         <tr>
             <td align="left">
                 <input class="input" type='text' placeholder='Name' name="name"/>

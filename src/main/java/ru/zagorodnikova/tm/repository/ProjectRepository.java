@@ -1,7 +1,10 @@
 package ru.zagorodnikova.tm.repository;
 
 
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.zagorodnikova.tm.api.repository.IProjectRepository;
 import ru.zagorodnikova.tm.bootstrap.Bootstrap;
 import ru.zagorodnikova.tm.entity.Project;
@@ -9,22 +12,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
+@Component
+@NoArgsConstructor
 public class ProjectRepository implements IProjectRepository {
-
-    private static ProjectRepository instance = null;
 
     @NotNull
     private final Map<String, Project> projects = new LinkedHashMap<>();
-
-    private ProjectRepository() {
-    }
-
-    public static ProjectRepository getInstance() {
-        if (instance == null) {
-            instance = new ProjectRepository();
-        }
-        return instance;
-    }
 
     @Nullable
     @Override

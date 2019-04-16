@@ -12,7 +12,7 @@
 </head>
 <body>
 <button class="signOut" onclick="location.href='/app'">Sign out</button>
-<a class="create" href="project-create">
+<a class="create" href="project-create?userId=<%=request.getAttribute("userId")%>">
     Add project
     <i class="material-icons" style="font-size:48px;color:#17F1D7" align = "center">add</i>
 </a>
@@ -45,7 +45,7 @@
         <td align="left"> <%= DateFormatterUtil.dateFormatter(project.getDateFinish()) %> </td>
         <td align="left"> <%= project.getStatus() %> </td>
         <td class="toHover">
-            <a href="project-edit?id=<%=project.getId()%>">
+            <a href="project-update?id=<%=project.getId()%>">
                 <i class="material-icons" style="font-size:48px;color:#45D09E" align = "center">border_color</i>
             </a>
         </td>

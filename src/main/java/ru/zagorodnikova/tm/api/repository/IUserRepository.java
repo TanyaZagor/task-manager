@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.zagorodnikova.tm.entity.User;
 
+import java.util.List;
+
 public interface IUserRepository {
 
     @Nullable
@@ -14,4 +16,7 @@ public interface IUserRepository {
 
     @Nullable
     User findOneByLogin(@NotNull final String login);
+
+    @Nullable
+    List<User> getUsers();
 }

@@ -1,5 +1,6 @@
 package ru.zagorodnikova.tm.entity;
 
+import org.springframework.stereotype.Component;
 import ru.zagorodnikova.tm.entity.enumeration.Status;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Component
 @NoArgsConstructor
 public class Task {
 

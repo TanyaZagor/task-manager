@@ -21,3 +21,7 @@ body {
     font-weight: 400;
     font-size: 1em;
 }
+.link {
+    text-decoration: none;
+    color: white;
+}

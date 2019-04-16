@@ -1,6 +1,10 @@
 package ru.zagorodnikova.tm.bootstrap;
 
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import ru.zagorodnikova.tm.api.ServiceLocator;
 import ru.zagorodnikova.tm.api.repository.IProjectRepository;
 import ru.zagorodnikova.tm.api.repository.ITaskRepository;
 import ru.zagorodnikova.tm.api.repository.IUserRepository;
@@ -13,15 +17,20 @@ import ru.zagorodnikova.tm.repository.UserRepository;
 
 import java.util.Date;
 
-public class Bootstrap {
+@Component
+@NoArgsConstructor
+public class Bootstrap implements ServiceLocator {
 
-    @NotNull private static final IProjectRepository projectRepository = ProjectRepository.getInstance();
+    @Autowired
+    private IProjectRepository projectRepository;
 
-    @NotNull private static final ITaskRepository taskRepository = TaskRepository.getInstance();
+    @Autowired
+    private ITaskRepository taskRepository;
 
-    @NotNull private static final IUserRepository userRepository = UserRepository.getInstance();
+    @Autowired
+    private IUserRepository userRepository;
 
-    public static void init() throws Exception {
+    public void init() throws Exception {
         User user1 = new User("test", "test", "first", "last", "email");
         User user2 = new User("admin", "admin", "first", "last", "email");
         userRepository.signUp(user1);

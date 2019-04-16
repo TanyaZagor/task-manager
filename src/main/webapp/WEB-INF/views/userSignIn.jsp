@@ -5,7 +5,7 @@
     <title>Sign up</title>
     <link href="../css/signup-style.css" rel="stylesheet" type="text/css">
 </head>
-<body
+<body>
 <div id='container'>
     <div class='signup'>
         <form action="user-signIn" method="POST">

@@ -8,8 +8,10 @@
 </head>
 <body>
 <div class="container">
-    <button class="button" onclick="location.href='/app/user-signUp'">Sign up</button>
-    <button class="button" onclick="location.href='/app/user-signIn'">Sign in</button>
+    <button class="button">
+        <a href="user-signUp">Sign up</a>
+        </button>
+    <button class="button" onclick="user-signIn">Sign in</button>
 </div>
 </body>
 </html>
