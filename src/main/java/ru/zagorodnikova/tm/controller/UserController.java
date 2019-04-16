@@ -1,6 +1,5 @@
 package ru.zagorodnikova.tm.controller;
 
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,11 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.zagorodnikova.tm.api.ServiceLocator;
-import ru.zagorodnikova.tm.api.repository.IUserRepository;
-import ru.zagorodnikova.tm.bootstrap.Bootstrap;
+import ru.zagorodnikova.tm.api.service.IUserService;
 import ru.zagorodnikova.tm.entity.User;
-import ru.zagorodnikova.tm.repository.UserRepository;
-import ru.zagorodnikova.tm.util.PasswordUtil;
 
 @Controller
 public class UserController {
@@ -21,31 +17,21 @@ public class UserController {
     private ServiceLocator bootstrap;
 
     @Autowired
-    private IUserRepository userRepository;
+    private IUserService userService;
 
     @GetMapping("/user-signIn")
-    public String signInGet() {
-        try {
-            if (userRepository.getUsers().isEmpty()) bootstrap.init();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public String signInGet() throws Exception {
+        if (userService.getUsers() == null || userService.getUsers().isEmpty()) bootstrap.init();
         return "userSignIn";
     }
 
     @PostMapping("/user-signIn")
-    public String signInPost(@RequestParam String login, @RequestParam String password, Model model) {
-        try {
-            @NotNull final String passwordHash = PasswordUtil.hashPassword(password);
-            User user = userRepository.signIn(login, passwordHash);
-            if (user != null) {
-                model.addAttribute("userId", user.getId());
-                return "redirect:project-list";
-            } else {
-                return "userSignIn";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    public String signInPost(@RequestParam String login, @RequestParam String password, Model model) throws Exception {
+        User user = userService.signIn(login, password);
+        if (user != null) {
+            model.addAttribute("userId", user.getId());
+            return "redirect:project-list";
+        } else {
             return "userSignIn";
         }
     }
@@ -63,18 +49,8 @@ public class UserController {
     @PostMapping("/user-signUp")
     public String signUpPost(@RequestParam String login, @RequestParam String password, @RequestParam String firstName,
                              @RequestParam String lastName, @RequestParam String email, Model model) {
-        if (userRepository.findOneByLogin(login) == null) {
-            User user = new User();
-            user.setLogin(login);
-            try {
-                user.setPassword(password);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setEmail(email);
-            userRepository.signUp(user);
+        User user = userService.signUp(login, password, firstName, lastName, email);
+        if (user != null) {
             model.addAttribute("userId", user.getId());
             return "redirect:project-list";
         } else {

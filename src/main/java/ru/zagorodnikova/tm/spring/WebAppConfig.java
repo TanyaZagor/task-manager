@@ -1,4 +1,4 @@
-package ru.zagorodnikova.tm;
+package ru.zagorodnikova.tm.spring;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -21,5 +21,4 @@ public class WebAppConfig implements WebMvcConfigurer {
         resolver.setViewClass(JstlView.class);
         return resolver;
     }
-
 }
