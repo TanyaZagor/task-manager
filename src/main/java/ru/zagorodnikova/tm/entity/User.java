@@ -5,22 +5,25 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.springframework.stereotype.Component;
 import ru.zagorodnikova.tm.entity.enumeration.RoleType;
 import ru.zagorodnikova.tm.util.PasswordUtil;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
 @Getter
 @Setter
-@Component
+@Entity
 @NoArgsConstructor
+@Table(name = "app_user")
 public class User {
 
+    @Id
     @NotNull
     private String id = UUID.randomUUID().toString();
 
+    @Column(unique = true)
     @Nullable
     private String login;
 
@@ -37,6 +40,8 @@ public class User {
     private String email;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
     private RoleType roleType = RoleType.USER;
 
     public User(@Nullable String login, @Nullable String password, @Nullable String firstName,

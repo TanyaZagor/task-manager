@@ -4,69 +4,69 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 import ru.zagorodnikova.tm.api.repository.ITaskRepository;
 import ru.zagorodnikova.tm.entity.Task;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
-import java.util.Map;
 
 @Component
 @NoArgsConstructor
 public class TaskRepository implements ITaskRepository {
-    @NotNull
-    private final Map<String, Task> tasks = new LinkedHashMap<>();
 
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Nullable
     @Override
     public Task persist(@NotNull Task task) {
-        tasks.put(task.getId(), task);
+        entityManager.persist(task);
         return task;
     }
 
     @Override
-    public void remove(@NotNull String id) {
-        tasks.remove(id);
+    public void remove(@NotNull final Task task) {
+        entityManager.remove(task);
     }
 
     @Override
     public void removeAllInProject(@NotNull String projectId) {
-        tasks.entrySet().removeIf((v) -> v.getValue().getProjectId().equals(projectId));
+        entityManager.createQuery("DELETE FROM Task task WHERE task.projectId = :projectId")
+                .setParameter("projectId", projectId)
+                .executeUpdate();
     }
 
     @Override
-    public void removeAll() {
-        tasks.clear();
+    public void removeAll(@NotNull String userId) {
+        entityManager.createQuery("DELETE FROM Task task WHERE task.userId = :userId")
+                .setParameter("userId", userId)
+                .executeUpdate();
     }
 
     @Nullable
     @Override
     public Task findOne(@NotNull String id) {
-        return tasks.get(id);
+        return entityManager.find(Task.class, id);
     }
 
     @Override
     public void merge(@NotNull Task task) {
-        tasks.put(task.getId(), task);
+        entityManager.merge(task);
     }
 
     @Override
-    public @Nullable List<Task> findAllInProject(@NotNull String projectId) {
-        @Nullable final List<Task> list = new LinkedList<>();
-        tasks.forEach((k,v) -> {
-            if (v.getProjectId().equals(projectId)) list.add(v);
-        });
-        return list;
+    @Nullable
+    public List<Task> findAllInProject(@NotNull String projectId) {
+        return entityManager.createQuery("SELECT task FROM Task task WHERE task.projectId = :projectId", Task.class)
+                .setParameter("projectId", projectId)
+                .getResultList();
     }
 
     @Override
     public @Nullable List findAll() {
-        @Nullable final List<Task> list = new LinkedList<>();
-        tasks.forEach((k,v) -> list.add(v));
-        return list;
+        return entityManager.createQuery("SELECT task FROM Task task", Task.class)
+                .getResultList();
     }
 
 }

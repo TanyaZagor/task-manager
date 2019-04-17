@@ -15,8 +15,8 @@ public interface IUserRepository {
     User signIn(@NotNull final String login, @NotNull String password);
 
     @Nullable
-    User findOneByLogin(@NotNull final String login);
+    List<User> getUsers();
 
     @Nullable
-    List<User> getUsers();
+    User findOne(@NotNull final String id);
 }

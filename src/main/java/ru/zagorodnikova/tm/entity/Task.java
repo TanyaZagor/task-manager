@@ -1,12 +1,13 @@
 package ru.zagorodnikova.tm.entity;
 
-import org.springframework.stereotype.Component;
-import ru.zagorodnikova.tm.entity.enumeration.Status;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.zagorodnikova.tm.entity.enumeration.Status;
+
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
@@ -14,10 +15,12 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Component
+@Entity
 @NoArgsConstructor
+@Table(name = "app_task")
 public class Task {
 
+    @Id
     @NotNull
     private String id = UUID.randomUUID().toString();
 
@@ -43,6 +46,7 @@ public class Task {
     private Date dateCreate = new Date();
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Status status = Status.SCHEDULED;
 
     public Task(@NotNull String userId, @NotNull String projectId, @NotNull String name,

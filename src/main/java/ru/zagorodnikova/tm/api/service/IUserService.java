@@ -19,7 +19,7 @@ public interface IUserService {
                 @Nullable final String email);
 
     @Nullable
-    User findOne(@Nullable final String userId);
+    User findOne(@NotNull final String userId);
 
     @Nullable
     List<User> getUsers();

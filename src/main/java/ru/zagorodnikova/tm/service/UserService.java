@@ -4,15 +4,17 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.zagorodnikova.tm.api.repository.IUserRepository;
 import ru.zagorodnikova.tm.api.service.IUserService;
 import ru.zagorodnikova.tm.entity.User;
 import ru.zagorodnikova.tm.util.PasswordUtil;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
-@Component
+@Service
 @NoArgsConstructor
 public class UserService implements IUserService {
 
@@ -20,23 +22,29 @@ public class UserService implements IUserService {
     private IUserRepository userRepository;
 
     @Override
-    public @Nullable User signIn(@Nullable String login, @Nullable String password) throws Exception {
+    @Nullable
+    @Transactional
+    public User signIn(@Nullable String login, @Nullable String password) throws Exception {
         if (login == null || login.isEmpty()) return null;
         if (password == null || password.isEmpty()) return null;
         @NotNull final String passwordHash = PasswordUtil.hashPassword(password);
-        User user = userRepository.signIn(login, passwordHash);
-        return user;
+        try {
+            return userRepository.signIn(login, passwordHash);
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override
-    public @Nullable User signUp(@Nullable String login, @Nullable String password, @Nullable String firstName,
+    @Nullable
+    @Transactional
+    public User signUp(@Nullable String login, @Nullable String password, @Nullable String firstName,
                                  @Nullable String lastName, @Nullable String email) {
         if (login == null || login.isEmpty()) return null;
         if (password == null || password.isEmpty()) return null;
         if (firstName == null || firstName.isEmpty()) return null;
         if (lastName == null || lastName.isEmpty()) return null;
         if (email == null || email.isEmpty()) return null;
-        if (userRepository.findOneByLogin(login) != null) return null;
         User user = new User();
         user.setLogin(login);
         try {
@@ -47,18 +55,28 @@ public class UserService implements IUserService {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
-        userRepository.signUp(user);
-        return null;
+        return userRepository.signUp(user);
     }
 
     @Override
-    public @Nullable User findOne(@Nullable String login) {
-        if (login == null || login.isEmpty()) return null;
-        return userRepository.findOneByLogin(login);
+    @Nullable
+    @Transactional
+    public User findOne(@NotNull final String id) {
+        try {
+            return userRepository.findOne(id);
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override
-    public @Nullable List<User> getUsers() {
-        return userRepository.getUsers();
+    @Nullable
+    @Transactional
+    public List<User> getUsers() {
+        try {
+            return userRepository.getUsers();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }

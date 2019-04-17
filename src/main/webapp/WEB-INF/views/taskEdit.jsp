@@ -24,16 +24,12 @@
     </tr>
     </thead>
     <tbody>
-    <%
-        Task task = (Task) request.getAttribute("task");
-
-    %>
     <tr>
-        <td align="left"> <%= task.getName() %> </td>
-        <td align="left"> <%= task.getDescription() %> </td>
-        <td align="left"> <%= DateFormatterUtil.dateFormatter(task.getDateStart()) %> </td>
-        <td align="left"> <%= DateFormatterUtil.dateFormatter(task.getDateFinish()) %> </td>
-        <td align="left"> <%= task.getStatus() %> </td>
+        <td align="left"> ${task.name} </td>
+        <td align="left"> ${task.description} </td>
+        <td align="left"> ${task.dateStart}</td>
+        <td align="left"> ${task.dateFinish}</td>
+        <td align="left"> ${task.status}</td>
     </tr>
     <form action="task-update" method="POST">
         <tr>
@@ -44,15 +40,15 @@
                 <input class="input" type='text' placeholder='Description' name="description"/>
             </td>
             <td align="left">
-                <input class="input" type='text' placeholder='Date start' name="dateStart"/>
+                <input class="input" type='date' placeholder='Date start' name="dateStart"/>
             </td>
             <td align="left">
-                <input class="input" type='text' placeholder='Date finish' name="dateFinish"/>
+                <input class="input" type='date' placeholder='Date finish' name="dateFinish"/>
             </td>
             <td align="left">
                 <input class="input" type='text' placeholder='Status' name="status"/>
             </td>
-            <input type='hidden' name="id" value="<%= task.getId() %>"/>
+            <input type='hidden' name="id" value="${task.id}"/>
             <td class="toHover">
                 <button class="save">
                     <i class="material-icons" style="font-size:48px;color:#45D09E" align = "center">save</i>

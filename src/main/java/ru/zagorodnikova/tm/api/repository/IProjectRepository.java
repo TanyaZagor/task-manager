@@ -11,9 +11,9 @@ public interface IProjectRepository {
     @Nullable
     Project persist(@NotNull final Project project);
 
-    void remove(@NotNull final String id);
+    void remove(@NotNull final Project project);
 
-    void removeAll();
+    void removeAll(@NotNull final String userId);
 
     @Nullable
     Project findOne(@NotNull final String id);

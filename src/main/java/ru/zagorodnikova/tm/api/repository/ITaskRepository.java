@@ -11,11 +11,11 @@ public interface ITaskRepository {
     @Nullable
     Task persist(@NotNull Task task);
 
-    void remove(@NotNull String id);
+    void remove(@NotNull Task task);
 
     void removeAllInProject(@NotNull String projectId);
 
-    void removeAll();
+    void removeAll(@NotNull String userId);
 
     @Nullable
     Task findOne(@NotNull String id);

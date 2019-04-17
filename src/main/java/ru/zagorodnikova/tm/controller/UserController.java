@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.zagorodnikova.tm.api.ServiceLocator;
 import ru.zagorodnikova.tm.api.service.IUserService;
 import ru.zagorodnikova.tm.entity.User;
 
@@ -14,14 +13,10 @@ import ru.zagorodnikova.tm.entity.User;
 public class UserController {
 
     @Autowired
-    private ServiceLocator bootstrap;
-
-    @Autowired
     private IUserService userService;
 
     @GetMapping("/user-signIn")
-    public String signInGet() throws Exception {
-        if (userService.getUsers() == null || userService.getUsers().isEmpty()) bootstrap.init();
+    public String signInGet(){
         return "userSignIn";
     }
 

@@ -34,7 +34,7 @@
             <td align="left">
                 <input class="input" type='text' placeholder='Date finish' name="dateFinish"/>
             </td>
-            <input type='hidden' name="userId" value="<%= request.getAttribute("userId")%>"/>
+            <input type='hidden' name="userId" value="${userId}"/>
             <td class="toHover">
                 <button class="save">
                     <i class="material-icons" style="font-size:48px;color:#45D09E" align = "center">save</i>

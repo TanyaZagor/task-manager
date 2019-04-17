@@ -1,25 +1,28 @@
 package ru.zagorodnikova.tm.entity;
 
-import org.springframework.stereotype.Component;
-import ru.zagorodnikova.tm.entity.enumeration.Status;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.zagorodnikova.tm.entity.enumeration.Status;
 
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 @Getter
 @Setter
+@Entity
 @ToString
-@Component
 @NoArgsConstructor
+@Table(name = "app_project")
 public class Project {
 
+    @Id
     @NotNull
     private String id = UUID.randomUUID().toString();
 
@@ -42,7 +45,11 @@ public class Project {
     private Date dateCreate = new Date();
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Status status = Status.SCHEDULED;
+
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "projectId", orphanRemoval = true)
+    private List<Task> tasks;
 
     public Project(@NotNull String userId, @NotNull String name, @NotNull String description,
                    @NotNull Date dateStart, @NotNull Date dateFinish) {

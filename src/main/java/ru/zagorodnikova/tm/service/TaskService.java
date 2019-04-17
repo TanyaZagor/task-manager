@@ -4,7 +4,8 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.zagorodnikova.tm.api.repository.IProjectRepository;
 import ru.zagorodnikova.tm.api.repository.ITaskRepository;
 import ru.zagorodnikova.tm.api.service.ITaskService;
@@ -13,9 +14,10 @@ import ru.zagorodnikova.tm.entity.Task;
 import ru.zagorodnikova.tm.entity.enumeration.Status;
 import ru.zagorodnikova.tm.util.DateFormatterUtil;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
-@Component
+@Service
 @NoArgsConstructor
 public class TaskService implements ITaskService {
 
@@ -26,7 +28,9 @@ public class TaskService implements ITaskService {
     private IProjectRepository projectRepository;
 
     @Override
-    public @Nullable Task persist(@NotNull String projectId,
+    @Nullable
+    @Transactional
+    public Task persist(@NotNull String projectId,
                                   @Nullable String name,
                                   @Nullable String description,
                                   @Nullable String dateStart,
@@ -47,17 +51,22 @@ public class TaskService implements ITaskService {
     }
 
     @Override
+    @Transactional
     public void removeAllInProject(@NotNull String projectId) {
         taskRepository.removeAllInProject(projectId);
     }
 
     @Override
+    @Transactional
     public void remove(@NotNull String id) {
-        taskRepository.remove(id);
+        final Task task = findOne(id);
+        if (task == null) return;
+        taskRepository.remove(task);
     }
 
     @Nullable
     @Override
+    @Transactional
     public Task merge(@NotNull String id,
                       @Nullable String name,
                       @Nullable String description,
@@ -69,7 +78,7 @@ public class TaskService implements ITaskService {
         if (dateStart == null || dateStart.isEmpty()) return null;
         if (dateFinish == null || dateFinish.isEmpty()) return null;
         if (status == null || status.isEmpty()) return null;
-        Task task = taskRepository.findOne(id);
+        Task task = findOne(id);
         if (task == null) return null;
         task.setName(name);
         task.setDescription(description);
@@ -82,12 +91,24 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public @Nullable List<Task> findAllInProject(@NotNull String projectId) {
-        return taskRepository.findAllInProject(projectId);
+    @Nullable
+    @Transactional
+    public List<Task> findAllInProject(@NotNull String projectId) {
+        try {
+            return taskRepository.findAllInProject(projectId);
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override
-    public @Nullable Task findOne(@NotNull String id) {
-        return taskRepository.findOne(id);
+    @Nullable
+    @Transactional
+    public Task findOne(@NotNull String id) {
+        try {
+            return taskRepository.findOne(id);
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }

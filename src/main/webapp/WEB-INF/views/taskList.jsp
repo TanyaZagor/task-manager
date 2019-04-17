@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="ru.zagorodnikova.tm.entity.Task" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ru.zagorodnikova.tm.util.DateFormatterUtil" %>
@@ -20,7 +21,6 @@
     <thead>
     <tr>
         <th><h1>Name</h1></th>
-        <th><h1>Id</h1></th>
         <th><h1>Description</h1></th>
         <th><h1>Date created</h1></th>
         <th><h1>Date start</h1></th>
@@ -31,31 +31,26 @@
     </tr>
     </thead>
     <tbody>
-    <%
-        List<Task> list = (List<Task>) request.getAttribute("tasks");
-        for (Task task : list) { %>
+    <c:forEach var="task" items="${tasks}">
     <tr>
-        <td align="left"> <%= task.getName() %> </td>
-        <td align="left"> <%= task.getId() %> </td>
-        <td align="left"> <%= task.getDescription() %> </td>
-        <td align="left"> <%= DateFormatterUtil.dateFormatter(task.getDateCreate())%> </td>
-        <td align="left"> <%= DateFormatterUtil.dateFormatter(task.getDateStart()) %> </td>
-        <td align="left"> <%= DateFormatterUtil.dateFormatter(task.getDateFinish()) %> </td>
-        <td align="left"> <%= task.getStatus() %> </td>
+        <td align="left"> ${task.name} </td>
+        <td align="left"> ${task.description} </td>
+        <td align="left"> ${task.dateCreate} </td>
+        <td align="left"> ${task.dateStart} </td>
+        <td align="left"> ${task.dateFinish} </td>
+        <td align="left"> ${task.status} </td>
         <td class="toHover">
-            <a href="task-update?id=<%=task.getId()%>">
+            <a href="task-update?id=${task.id}">
                 <i class="material-icons" style="font-size:48px;color:#45D09E" align = "center">border_color</i>
             </a>
         </td>
         <td class="toHover">
-            <a href="task-remove?id=<%=task.getId()%>">
+            <a href="task-remove?id=${task.id}">
                 <i class="material-icons" style="font-size:48px;color:#E20338" align = "center">delete_sweep</i>
             </a>
         </td>
     </tr>
-    <%
-        }
-    %>
+    </c:forEach>
     </tbody>
 </table>
 

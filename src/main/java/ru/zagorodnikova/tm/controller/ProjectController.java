@@ -37,8 +37,12 @@ public class ProjectController {
     }
 
     @PostMapping("/project-create")
-    public String createPost(@RequestParam String userId, @RequestParam String name, @RequestParam String description,
-                             @RequestParam String dateStart, @RequestParam String dateFinish, Model model) throws Exception {
+    public String createPost(@RequestParam String userId,
+                             @RequestParam String name,
+                             @RequestParam String description,
+                             @RequestParam String dateStart,
+                             @RequestParam String dateFinish,
+                             Model model) throws Exception {
         projectService.persist(userId, name, description, dateStart, dateFinish);
         model.addAttribute("userId", userId);
         return "redirect:project-list";
@@ -52,7 +56,13 @@ public class ProjectController {
     }
 
     @PostMapping("/project-update")
-    public String updatePost(@RequestParam String id, @RequestParam String name, @RequestParam String description, @RequestParam String dateStart, @RequestParam String dateFinish, @RequestParam String status, Model model) throws Exception {
+    public String updatePost(@RequestParam String id,
+                             @RequestParam String name,
+                             @RequestParam String description,
+                             @RequestParam String dateStart,
+                             @RequestParam String dateFinish,
+                             @RequestParam String status,
+                             Model model) throws Exception {
         Project project = projectService.merge(id, name, description, dateStart, dateFinish, status);
         model.addAttribute("userId", project.getUserId());
         return "redirect:project-list";

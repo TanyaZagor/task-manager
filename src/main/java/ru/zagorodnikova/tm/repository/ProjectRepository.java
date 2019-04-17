@@ -2,64 +2,63 @@ package ru.zagorodnikova.tm.repository;
 
 
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ru.zagorodnikova.tm.api.repository.IProjectRepository;
-import ru.zagorodnikova.tm.bootstrap.Bootstrap;
 import ru.zagorodnikova.tm.entity.Project;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.List;
 
-@Component
+@Repository
 @NoArgsConstructor
 public class ProjectRepository implements IProjectRepository {
 
-    @NotNull
-    private final Map<String, Project> projects = new LinkedHashMap<>();
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Nullable
     @Override
     public Project persist(@NotNull final Project project) {
-        projects.put(project.getId(), project);
+        entityManager.persist(project);
         return project;
     }
 
     @Override
-    public void remove(@NotNull final String id) {
-        projects.remove(id);
+    public void remove(@NotNull final Project project) {
+        entityManager.remove(project);
     }
 
     @Override
-    public void removeAll() {
-        projects.clear();
+    public void removeAll(@NotNull final String userId) {
+        entityManager.createQuery("DELETE FROM Project project WHERE project.userId = :userId")
+                .setParameter("userId", userId)
+                .executeUpdate();
     }
 
     @Nullable
     @Override
     public Project findOne(@NotNull final String id) {
-        return projects.get(id);
+        return entityManager.find(Project.class, id);
     }
 
     @Override
     public void merge(@NotNull final Project project) {
-        projects.put(project.getId(), project);
+        entityManager.merge(project);
     }
 
     @Override
     public @Nullable List<Project> findAll(@NotNull final String userId) {
-        @Nullable final List<Project> list = new LinkedList<>();
-        projects.forEach((k,v) -> {
-            if (v.getUserId().equals(userId)) list.add(v);
-        });
-        return list;
+        return entityManager.createQuery("SELECT project FROM Project project WHERE project.userId = :userId", Project.class)
+                .setParameter("userId",userId)
+                .getResultList();
     }
 
     @Override
     public @Nullable List<Project> getProjects() {
-        @Nullable final List<Project> list = new LinkedList<>();
-        projects.forEach((k,v) -> list.add(v));
-        return list;
+        return entityManager.createQuery("SELECT project FROM Project project", Project.class)
+                .getResultList();
     }
 }
