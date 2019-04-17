@@ -45,7 +45,11 @@
                 <input class="input" type='date' placeholder='Date finish' name="dateFinish"/>
             </td>
             <td align="left">
-                <input class="input" type='text' placeholder='Status' name="status"/>
+                <select name="status">
+                    <option>done</option>
+                    <option>in progress</option>
+                    <option>scheduled</option>
+                </select>
             </td>
                 <input type='hidden' name="id" value="${project.id}"/>
             <td class="toHover">
