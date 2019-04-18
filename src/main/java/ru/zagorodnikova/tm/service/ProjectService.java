@@ -6,14 +6,13 @@ import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.zagorodnikova.tm.api.repository.IProjectRepository;
-import ru.zagorodnikova.tm.api.repository.ITaskRepository;
 import ru.zagorodnikova.tm.api.service.IProjectService;
 import ru.zagorodnikova.tm.entity.Project;
 import ru.zagorodnikova.tm.entity.enumeration.Status;
+import ru.zagorodnikova.tm.repository.ProjectRepository;
+import ru.zagorodnikova.tm.repository.TaskRepository;
 import ru.zagorodnikova.tm.util.DateFormatterUtil;
 
-import javax.persistence.NoResultException;
 import java.util.List;
 
 @Service
@@ -21,10 +20,10 @@ import java.util.List;
 public class ProjectService implements IProjectService {
 
     @Autowired
-    private IProjectRepository projectRepository;
+    private ProjectRepository projectRepository;
 
     @Autowired
-    private ITaskRepository taskRepository;
+    private TaskRepository taskRepository;
 
     @Override
     @Nullable
@@ -44,7 +43,7 @@ public class ProjectService implements IProjectService {
         project.setDescription(description);
         project.setDateStart(DateFormatterUtil.dateFormatter(dateStart));
         project.setDateFinish(DateFormatterUtil.dateFormatter(dateFinish));
-        return projectRepository.persist(project);
+        return projectRepository.save(project);
     }
 
     @Override
@@ -53,29 +52,21 @@ public class ProjectService implements IProjectService {
         Project project = findOne(id);
         if (project == null) return;
         taskRepository.removeAllInProject(project.getUserId());
-        projectRepository.remove(project);
+        projectRepository.delete(project);
     }
 
     @Override
     @Nullable
     @Transactional
     public List<Project> findAll(@NotNull String userId) {
-        try {
-            return projectRepository.findAll(userId);
-        } catch (NoResultException e) {
-            return null;
-        }
+        return projectRepository.findAllByUserId(userId);
     }
 
     @Override
     @Nullable
     @Transactional
     public Project findOne(@NotNull String id) {
-        try {
-            return projectRepository.findOne(id);
-        } catch (NoResultException e) {
-            return null;
-        }
+        return projectRepository.findById(id).orElse(null);
     }
 
     @Nullable
@@ -100,7 +91,7 @@ public class ProjectService implements IProjectService {
         project.setDateFinish(DateFormatterUtil.dateFormatter(dateFinish));
         Status newStatus = Status.createStatus(status);
         project.setStatus(newStatus);
-        projectRepository.merge(project);
+        projectRepository.save(project);
         return project;
     }
 }

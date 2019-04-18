@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.zagorodnikova.tm.entity.enumeration.Status;
@@ -17,9 +19,11 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@Cacheable
 @ToString
 @NoArgsConstructor
 @Table(name = "app_project")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Project {
 
     @Id

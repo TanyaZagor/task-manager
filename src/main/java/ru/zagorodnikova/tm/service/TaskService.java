@@ -6,15 +6,14 @@ import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.zagorodnikova.tm.api.repository.IProjectRepository;
-import ru.zagorodnikova.tm.api.repository.ITaskRepository;
 import ru.zagorodnikova.tm.api.service.ITaskService;
 import ru.zagorodnikova.tm.entity.Project;
 import ru.zagorodnikova.tm.entity.Task;
 import ru.zagorodnikova.tm.entity.enumeration.Status;
+import ru.zagorodnikova.tm.repository.ProjectRepository;
+import ru.zagorodnikova.tm.repository.TaskRepository;
 import ru.zagorodnikova.tm.util.DateFormatterUtil;
 
-import javax.persistence.NoResultException;
 import java.util.List;
 
 @Service
@@ -22,10 +21,10 @@ import java.util.List;
 public class TaskService implements ITaskService {
 
     @Autowired
-    private ITaskRepository taskRepository;
+    private TaskRepository taskRepository;
 
     @Autowired
-    private IProjectRepository projectRepository;
+    private ProjectRepository projectRepository;
 
     @Override
     @Nullable
@@ -39,7 +38,7 @@ public class TaskService implements ITaskService {
         if (description == null || description.isEmpty()) return null;
         if (dateStart == null || dateStart.isEmpty()) return null;
         if (dateFinish == null || dateFinish.isEmpty()) return null;
-        Project project = projectRepository.findOne(projectId);
+        Project project = projectRepository.findById(projectId).orElse(null);
         Task task = new Task();
         task.setUserId(project.getUserId());
         task.setProjectId(projectId);
@@ -47,7 +46,7 @@ public class TaskService implements ITaskService {
         task.setDescription(description);
         task.setDateStart(DateFormatterUtil.dateFormatter(dateStart));
         task.setDateFinish(DateFormatterUtil.dateFormatter(dateFinish));
-        return taskRepository.persist(task);
+        return taskRepository.save(task);
     }
 
     @Override
@@ -61,7 +60,7 @@ public class TaskService implements ITaskService {
     public void remove(@NotNull String id) {
         final Task task = findOne(id);
         if (task == null) return;
-        taskRepository.remove(task);
+        taskRepository.delete(task);
     }
 
     @Nullable
@@ -86,7 +85,7 @@ public class TaskService implements ITaskService {
         task.setDateFinish(DateFormatterUtil.dateFormatter(dateFinish));
         Status newStatus = Status.createStatus(status);
         task.setStatus(newStatus);
-        taskRepository.merge(task);
+        taskRepository.save(task);
         return task;
     }
 
@@ -94,21 +93,13 @@ public class TaskService implements ITaskService {
     @Nullable
     @Transactional
     public List<Task> findAllInProject(@NotNull String projectId) {
-        try {
-            return taskRepository.findAllInProject(projectId);
-        } catch (NoResultException e) {
-            return null;
-        }
+        return taskRepository.findAllInProject(projectId);
     }
 
     @Override
     @Nullable
     @Transactional
     public Task findOne(@NotNull String id) {
-        try {
-            return taskRepository.findOne(id);
-        } catch (NoResultException e) {
-            return null;
-        }
+        return taskRepository.findById(id).orElse(null);
     }
 }

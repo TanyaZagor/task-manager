@@ -3,6 +3,8 @@ package ru.zagorodnikova.tm.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.zagorodnikova.tm.entity.enumeration.Status;
@@ -16,8 +18,10 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@Cacheable
 @NoArgsConstructor
 @Table(name = "app_task")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Task {
 
     @Id

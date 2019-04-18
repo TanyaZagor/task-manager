@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -19,6 +20,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
 @ComponentScan(basePackages = "ru.zagorodnikova.tm")
+@EnableJpaRepositories(basePackages = "ru.zagorodnikova.tm.repository")
 public class JPAConfig {
 
     @Bean
@@ -45,6 +47,7 @@ public class JPAConfig {
     ) {
         final LocalContainerEntityManagerFactoryBean factoryBean;
         factoryBean = new LocalContainerEntityManagerFactoryBean();
+        factoryBean.setPersistenceUnitName("ENTERPRISE");
         factoryBean.setDataSource(dataSource);
         factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         factoryBean.setPackagesToScan("ru.zagorodnikova.tm");

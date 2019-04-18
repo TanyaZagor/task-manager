@@ -29,10 +29,10 @@
                 <input class="input" type='text' placeholder='Description' name="description"/>
             </td>
             <td align="left">
-                <input class="input" type='text' placeholder='Date start' name="dateStart"/>
+                <input class="input" type='date' placeholder='Date start' name="dateStart"/>
             </td>
             <td align="left">
-                <input class="input" type='text' placeholder='Date finish' name="dateFinish"/>
+                <input class="input" type='date' placeholder='Date finish' name="dateFinish"/>
             </td>
             <input type='hidden' name="userId" value="${userId}"/>
             <td class="toHover">

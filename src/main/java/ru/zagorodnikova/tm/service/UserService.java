@@ -6,9 +6,9 @@ import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.zagorodnikova.tm.api.repository.IUserRepository;
 import ru.zagorodnikova.tm.api.service.IUserService;
 import ru.zagorodnikova.tm.entity.User;
+import ru.zagorodnikova.tm.repository.UserRepository;
 import ru.zagorodnikova.tm.util.PasswordUtil;
 
 import javax.persistence.NoResultException;
@@ -19,7 +19,7 @@ import java.util.List;
 public class UserService implements IUserService {
 
     @Autowired
-    private IUserRepository userRepository;
+    private UserRepository userRepository;
 
     @Override
     @Nullable
@@ -55,28 +55,20 @@ public class UserService implements IUserService {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
-        return userRepository.signUp(user);
+        return userRepository.save(user);
     }
 
     @Override
     @Nullable
     @Transactional
     public User findOne(@NotNull final String id) {
-        try {
-            return userRepository.findOne(id);
-        } catch (NoResultException e) {
-            return null;
-        }
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
     @Nullable
     @Transactional
     public List<User> getUsers() {
-        try {
-            return userRepository.getUsers();
-        } catch (NoResultException e) {
-            return null;
-        }
+        return userRepository.findAll();
     }
 }
