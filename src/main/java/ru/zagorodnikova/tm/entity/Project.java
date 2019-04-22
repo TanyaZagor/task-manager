@@ -19,8 +19,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Cacheable
 @ToString
+@Cacheable
 @NoArgsConstructor
 @Table(name = "app_project")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)

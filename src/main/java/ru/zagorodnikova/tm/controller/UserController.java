@@ -15,16 +15,11 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
-    @GetMapping("/user-signIn")
-    public String signInGet(){
-        return "userSignIn";
-    }
+    private User user;
 
-    @PostMapping("/user-signIn")
-    public String signInPost(@RequestParam String login, @RequestParam String password, Model model) throws Exception {
-        User user = userService.signIn(login, password);
+    public String signIn() throws Exception {
+        user = userService.signIn(user.getLogin(), user.getPassword());
         if (user != null) {
-            model.addAttribute("userId", user.getId());
             return "redirect:project-list";
         } else {
             return "userSignIn";
