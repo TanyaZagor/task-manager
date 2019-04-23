@@ -1,15 +1,21 @@
 body {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
-    line-height: 1.42em;
-    color:#A7A1AE;
-    background-color:#1F2739;
+    background-color: #1F2739;
+    font: 1em Helvetica;
 }
+
 .container {
-    padding-top: 200px;
+    padding: 200px;
     width: 500px;
     margin: auto;
 }
+
+.formStyle {
+    padding: 30px 30px;
+    background-color: white;
+    text-align: center;
+    border-radius: 5px 5px 5px 5px;
+}
+
 .button {
     margin-top: 25px;
     width: 80%;
@@ -20,8 +26,4 @@ body {
     color: white;
     font-weight: 400;
     font-size: 1em;
-}
-.link {
-    text-decoration: none;
-    color: white;
 }

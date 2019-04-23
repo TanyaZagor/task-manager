@@ -5,26 +5,27 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-<f:view>
-    <h:form id="authForm">
-        <h:panelGrid columns="2" cellpadding="5">
-            <p:outputLabel value="Login:"/>
-            <p:inputText value="#{userSignUpController.login}"/>
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+    <h:outputStylesheet library="css" name="signup-style.css"/>
+</h:head>
+<h:body>
+    <div id="container">
+        <h:form styleClass="signup">
 
-            <h:outputText value="Password: " />
-            <p:password value="#{userSignUpController.password}"/>
+            <h:inputText type="text" styleClass="textIn" pt:placeholder="Login" value="#{userController.login}"/>
 
-            <h:outputText value="First name: " />
-            <p:password value="#{userSignUpController.firstName}"/>
+            <h:inputText type="text" styleClass="textIn" pt:placeholder="Password" value="#{userController.password}"/>
 
-            <h:outputText value="Last name: " />
-            <p:password value="#{userSignUpController.lastName}"/>
+            <h:inputText type="text" styleClass="textIn" pt:placeholder="First name" value="#{userController.firstName}"/>
 
-            <h:outputText value="Email: " />
-            <p:password value="#{userSignUpController.email}"/>
-        </h:panelGrid>
-        <p:commandButton value="Submit" icon="ui-icon-check" action="#{userSignUpController.signUp}"/>
-    </h:form>
-</f:view>
+            <h:inputText type="text" styleClass="textIn" pt:placeholder="Last name" value="#{userController.lastName}"/>
+
+            <h:inputText type="text" styleClass="textIn" pt:placeholder="Email" value="#{userController.email}"/>
+
+            <h:commandButton value="Sign up" styleClass="submit" action="#{userController.signUp}"/>
+        </h:form>
+    </div>
+</h:body>
 </html>

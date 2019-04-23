@@ -4,35 +4,49 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 </h:head>
-<f:view>
-    <p:dataTable var="project" value="#{projectListController.projectList()}">
-        <p:column headerText="Name">
+<h:body>
+    <h:commandButton styleClass="signOut" action="#{userSignUpController.signUp}" value="Sign out"/>
+    <h:dataTable styleClass="container" var="project" value="#{projectListController.projectList()}">
+        <h:column headerText="Name">
             <h:outputText value="#{project.name}" />
-        </p:column>
+        </h:column>
 
-        <p:column headerText="Description">
+        <h:column headerText="Description">
             <h:outputText value="#{project.description}" />
-        </p:column>
+        </h:column>
 
-        <p:column headerText="Date created">
+        <h:column headerText="Date created">
             <h:outputText value="#{project.dateCreate}" />
-        </p:column>
+        </h:column>
 
-        <p:column headerText="Date start">
+        <h:column headerText="Date start">
             <h:outputText value="#{project.dateStart}" />
-        </p:column>
+        </h:column>
 
-        <p:column headerText="Date finish">
+        <h:column headerText="Date finish">
             <h:outputText value="#{project.dateFinish}" />
-        </p:column>
+        </h:column>
 
-        <p:column headerText="Status">
+        <h:column headerText="Status">
             <h:outputText value="#{project.status}" />
-        </p:column>
-    </p:dataTable>
-</f:view>
+        </h:column>
+        <h:column headerText="Edit">
+            <h:form>
+                <h:commandLink action="#{projectEditController.editGet(project)}">
+                    <i class="material-icons" style="font-size:48px;color:#45D09E">border_color</i>
+                </h:commandLink>
+            </h:form>
+        </h:column>
+        <h:column headerText="Delete">
+            <h:link outcome="/userSignIn">
+                <i class="material-icons" style="font-size:48px;color:#E20338">delete_sweep</i>
+            </h:link>
+        </h:column>
+    </h:dataTable>
+</h:body>
 </html>
