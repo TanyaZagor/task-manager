@@ -2,7 +2,6 @@ package ru.zagorodnikova.tm.spring;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -19,7 +18,6 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
-@ComponentScan(basePackages = "ru.zagorodnikova.tm")
 @EnableJpaRepositories(basePackages = "ru.zagorodnikova.tm.repository")
 public class JPAConfig {
 

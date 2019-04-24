@@ -1,62 +1,68 @@
 package ru.zagorodnikova.tm.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.ocpsoft.pretty.faces.annotation.URLMapping;
+import com.ocpsoft.pretty.faces.annotation.URLMappings;
+import lombok.Getter;
+import lombok.Setter;
 import ru.zagorodnikova.tm.api.service.ITaskService;
 import ru.zagorodnikova.tm.entity.Task;
 
-@Controller
-public class TaskController {
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
+import java.util.List;
 
-    @Autowired
+@Getter
+@Setter
+@ManagedBean
+@SessionScoped
+@URLMappings(mappings = {
+        @URLMapping(id="taskEdit", pattern="/taskEdit", viewId="/WEB-INF/views/taskEdit.xhtml"),
+        @URLMapping(id="taskList", pattern="/taskList", viewId="/WEB-INF/views/taskList.xhtml")
+})
+public class TaskController {
+    private String id;
+
+    private String name;
+
+    private String description;
+
+    private String dateStart;
+
+    private String dateFinish;
+
+    private String status;
+
+    private Task task;
+
+    private List<Task> tasks;
+
+    @ManagedProperty("#{taskService}")
     private ITaskService taskService;
 
-    @GetMapping("/task-list")
-    public String taskList(@RequestParam String projectId, Model model) {
-        model.addAttribute("projectId", projectId);
-        model.addAttribute("tasks", taskService.findAllInProject(projectId));
-        return "taskList";
+    public String setTasks(String projectId) {
+        tasks = taskService.findAllInProject(projectId);
+        return "taskList?faces-redirect=true";
     }
 
-    @GetMapping("/task-create")
-    public String createTaskGet(@RequestParam String projectId, Model model) {
-        model.addAttribute("projectId", projectId);
-        return "taskCreate";
+    public String editGet(Task task){
+        this.task = task;
+        id = task.getId();
+        return "taskEdit?faces-redirect=true";
     }
 
-    @PostMapping("/task-create")
-    public String createTaskPost( @RequestParam String projectId, @RequestParam String name,
-                                 @RequestParam String description, @RequestParam String dateStart,
-                                 @RequestParam String dateFinish, Model model) throws Exception {
+    public String update() throws Exception {
+        taskService.merge(id, name, description, dateStart, dateFinish, status);
+        return "taskList?faces-redirect=true";
+    }
+
+    public String create(String projectId) throws Exception {
         taskService.persist(projectId, name, description, dateStart, dateFinish);
-        model.addAttribute("projectId", projectId);
-        return "redirect:task-list";
+        return "taskList?faces-redirect=true";
     }
 
-    @GetMapping("/task-remove")
-    public String remove(@RequestParam String id, Model model) {
-        Task task = taskService.findOne(id);
+    public String remove(String id) {
         taskService.remove(id);
-        model.addAttribute("projectId", task.getProjectId());
-        return "redirect:task-list";
-    }
-
-    @GetMapping("/task-update")
-    public String updateTaskGet(@RequestParam String id, Model model) {
-        model.addAttribute("task", taskService.findOne(id));
-        return "taskEdit";
-    }
-
-    @PostMapping("/task-update")
-    public String updateTaskPost(@RequestParam String id, @RequestParam String name, @RequestParam String description,
-                                 @RequestParam String dateStart, @RequestParam String dateFinish, @RequestParam String status,
-                                 Model model) throws Exception {
-        Task task = taskService.merge(id, name, description, dateStart, dateFinish, status);
-        model.addAttribute("projectId", task.getProjectId());
-        return "redirect:task-list";
+        return "taskList?faces-redirect=true";
     }
 }

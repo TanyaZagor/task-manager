@@ -4,38 +4,37 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <h:outputStylesheet library="css" name="edit-style.css"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 </h:head>
 <h:body>
     <h:commandButton styleClass="signOut" action="#{userController.signOut}" value="Sign out"/>
-    <h:dataTable class="container" var="project" value="#{projectController.projectGet}">
+    <h:dataTable styleClass="container" >
         <h:column>
             <f:facet name="header">Name</f:facet>
-            <h:inputText styleClass="input"  pt:placeholder="#{project.name}" value="#{projectController.name}"/>
+            <h:inputText styleClass="input" value="#{taskController.name}"/>
         </h:column>
 
         <h:column>
             <f:facet name="header">Description</f:facet>
-            <h:inputText styleClass="input" value="#{projectController.description}"/>
+            <h:inputText styleClass="input" value="#{taskController.description}"/>
         </h:column>
 
         <h:column>
             <f:facet name="header">Date start</f:facet>
-            <h:inputText styleClass="input" value="#{projectController.dateStart}"/>
+            <h:inputText styleClass="input" value="#{taskController.dateStart}"/>
         </h:column>
 
         <h:column>
             <f:facet name="header">Date finish</f:facet>
-            <h:inputText styleClass="input" value="#{projectController.dateFinish}"/>
+            <h:inputText styleClass="input" value="#{taskController.dateFinish}"/>
         </h:column>
         <h:column>
             <f:facet name="header">Save</f:facet>
             <h:form>
-                <h:commandLink action="#{projectController.create(userController.userId)}">
+                <h:commandLink action="#{taskController.update()}">
                     <i class="material-icons" style="font-size:48px;color:#45D09E">save</i>
                 </h:commandLink>
             </h:form>

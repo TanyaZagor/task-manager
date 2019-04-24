@@ -12,46 +12,42 @@
 <h:body>
     <h:form>
         <h:commandButton styleClass="signOut" action="#{userController.signOut}" value="Sign out"/>
-        <h:commandButton styleClass="signOut" action="projectCreate?faces-redirect=true" value="Add project" />
+        <h:commandButton styleClass="signOut" action="taskCreate?faces-redirect=true" value="Add task" />
     </h:form>
-    <h:dataTable styleClass="container" var="project" value="#{projectController.projectList(userController.userId)}">
+    <h:dataTable styleClass="container" var="task" value="#{taskController.tasks}">
         <h:column>
             <f:facet name="header">Name</f:facet>
-            <h:form>
-                <h:commandLink action="#{taskController.setTasks(project.id)}" style="text-decoration: none;color: #FB667A;">
-                    <h:outputText value="#{project.name}"/>
-                </h:commandLink>
-            </h:form>
+            <h:outputText value="#{task.name}" />
         </h:column>
 
         <h:column>
             <f:facet name="header">Description</f:facet>
-            <h:outputText value="#{project.description}" />
+            <h:outputText value="#{task.description}" />
         </h:column>
 
         <h:column>
-            <f:facet name="header">Name</f:facet>
-            <h:outputText value="#{project.dateCreate}" />
+            <f:facet name="header">Date created</f:facet>
+            <h:outputText value="#{task.dateCreate}" />
         </h:column>
 
         <h:column>
             <f:facet name="header">Date start</f:facet>
-            <h:outputText value="#{project.dateStart}" />
+            <h:outputText value="#{task.dateStart}" />
         </h:column>
 
         <h:column>
             <f:facet name="header">Date finish</f:facet>
-            <h:outputText value="#{project.dateFinish}" />
+            <h:outputText value="#{task.dateFinish}" />
         </h:column>
 
         <h:column>
             <f:facet name="header">Status</f:facet>
-            <h:outputText value="#{project.status}" />
+            <h:outputText value="#{task.status}" />
         </h:column>
         <h:column>
             <f:facet name="header">Edit</f:facet>
             <h:form>
-                <h:commandLink action="#{projectController.editGet()}">
+                <h:commandLink action="#{taskController.editGet(task)}">
                     <i class="material-icons" style="font-size:48px;color:#45D09E">border_color</i>
                 </h:commandLink>
             </h:form>
@@ -59,7 +55,7 @@
         <h:column>
             <f:facet name="header">Delete</f:facet>
             <h:form>
-                <h:commandLink action="#{projectController.remove(project.id)}">
+                <h:commandLink action="#{taskController.remove(task.id)}">
                     <i class="material-icons" style="font-size:48px;color:#E20338">delete_sweep</i>
                 </h:commandLink>
             </h:form>
