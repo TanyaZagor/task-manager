@@ -9,18 +9,21 @@ import ru.zagorodnikova.tm.entity.Task;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import java.util.List;
 
 @Getter
 @Setter
 @ManagedBean
-@SessionScoped
+@RequestScoped
 @URLMappings(mappings = {
         @URLMapping(id="taskEdit", pattern="/taskEdit", viewId="/WEB-INF/views/taskEdit.xhtml"),
-        @URLMapping(id="taskList", pattern="/taskList", viewId="/WEB-INF/views/taskList.xhtml")
+        @URLMapping(id="taskList", pattern="/taskList", viewId="/WEB-INF/views/taskList.xhtml"),
+        @URLMapping(id= "taskCreate", pattern = "/taskCreate", viewId = "/WEB-INF/views/taskCreate.xhtml")
 })
 public class TaskController {
+
+    @ManagedProperty("#{param.taskId}")
     private String id;
 
     private String name;
@@ -46,8 +49,6 @@ public class TaskController {
     }
 
     public String editGet(Task task){
-        this.task = task;
-        id = task.getId();
         return "taskEdit?faces-redirect=true";
     }
 

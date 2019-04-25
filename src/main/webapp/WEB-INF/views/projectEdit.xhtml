@@ -12,44 +12,46 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 </h:head>
 <h:body>
-    <h:commandButton styleClass="signOut" action="#{userController.signOut}" value="Sign out"/>
-    <h:outputText value="#{param['id']}"/>
-    <h:dataTable styleClass="container" var="project" value="#{projectController.project}">
-        <h:column>
-            <f:facet name="header">Name</f:facet>
-            <h:inputText styleClass="input" pt:placeholder="#{project.name}" value="#{projectController.name}"/>
-        </h:column>
+    <h:form>
+        <h:commandButton styleClass="signOut" action="#{userController.signOut}" value="Sign out"/>
+        <h:dataTable styleClass="container" var="project" value="#{projectController.getOneProject()}">
+            <h:column>
+                <f:facet name="header">Name</f:facet>
+                <h:inputText styleClass="input" id="name" pt:placeholder="#{project.name}" value="#{projectController.name}"/>
+            </h:column>
 
-        <h:column>
-            <f:facet name="header">Description</f:facet>
-            <h:inputText styleClass="input" pt:placeholder="#{project.description}" value="#{projectController.description}"/>
-        </h:column>
+            <h:column>
+                <f:facet name="header">Description</f:facet>
+                <h:inputText styleClass="input" pt:placeholder="#{project.description}" value="#{projectController.description}"/>
+            </h:column>
 
-        <h:column>
-            <f:facet name="header">Date start</f:facet>
-            <h:inputText styleClass="input" pt:placeholder="#{project.dateStart}" value="#{projectController.dateStart}"/>
-        </h:column>
+            <h:column>
+                <f:facet name="header">Date start</f:facet>
+                <h:inputText styleClass="input" pt:placeholder="#{project.dateStart}" value="#{projectController.dateStart}"/>
+            </h:column>
 
-        <h:column>
-            <f:facet name="header">Date finish</f:facet>
-            <h:inputText styleClass="input" pt:placeholder="#{project.dateFinish}" value="#{projectController.dateFinish}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">Status</f:facet>
-            <h:selectOneMenu value="#{projectController.status}" styleClass="input">
-                <f:selectItem itemLabel = "done" itemValue="done"/>
-                <f:selectItem itemLabel = "in progress" itemValue="in progress"/>
-                <f:selectItem itemLabel = "scheduled" itemValue="scheduled"/>
-            </h:selectOneMenu>
-        </h:column>
-        <h:column>
-            <f:facet name="header">Save</f:facet>
-            <h:form>
-                <h:commandLink action="#{projectController.update()}">
+            <h:column>
+                <f:facet name="header">Date finish</f:facet>
+                <h:inputText styleClass="input" pt:placeholder="#{project.dateFinish}" value="#{projectController.dateFinish}"/>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Status</f:facet>
+                <h:selectOneMenu value="#{projectController.status}" styleClass="input">
+                    <f:selectItem itemLabel = "done" itemValue="done"/>
+                    <f:selectItem itemLabel = "in progress" itemValue="in progress"/>
+                    <f:selectItem itemLabel = "scheduled" itemValue="scheduled"/>
+                </h:selectOneMenu>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Save</f:facet>
+                <h:commandLink action="#{projectController.update(project.id)}">
                     <i class="material-icons" style="font-size:48px;color:#45D09E">save</i>
                 </h:commandLink>
-            </h:form>
-        </h:column>
-    </h:dataTable>
+            </h:column>
+        </h:dataTable>
+    </h:form>
+
 </h:body>
 </html>

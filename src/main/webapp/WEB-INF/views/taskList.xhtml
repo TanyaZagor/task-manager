@@ -47,9 +47,10 @@
         <h:column>
             <f:facet name="header">Edit</f:facet>
             <h:form>
-                <h:commandLink action="#{taskController.editGet(task)}">
+                <h:link outcome="taskEdit?faces-redirect=true" includeViewParams="true">
+                    <f:param id="taskId" value="#{task.id}"/>
                     <i class="material-icons" style="font-size:48px;color:#45D09E">border_color</i>
-                </h:commandLink>
+                </h:link>
             </h:form>
         </h:column>
         <h:column>

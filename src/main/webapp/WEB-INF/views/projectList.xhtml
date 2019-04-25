@@ -51,9 +51,10 @@
         <h:column>
             <f:facet name="header">Edit</f:facet>
             <h:form>
-                <h:commandLink action="#{projectController.editGet()}">
+                <h:link outcome="projectEdit?faces-redirect=true" includeViewParams="true">
+                    <f:param name="projectId" value="#{project.id}"/>
                     <i class="material-icons" style="font-size:48px;color:#45D09E">border_color</i>
-                </h:commandLink>
+                </h:link>
             </h:form>
         </h:column>
         <h:column>

@@ -9,15 +9,13 @@ import ru.zagorodnikova.tm.entity.Project;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
+import javax.faces.bean.RequestScoped;
 import java.util.List;
-import java.util.Map;
 
 @Getter
 @Setter
 @ManagedBean
-@SessionScoped
+@RequestScoped
 @URLMappings(mappings = {
         @URLMapping(id="projectEdit", pattern="/projectEdit", viewId="/WEB-INF/views/projectEdit.xhtml"),
         @URLMapping(id="projectList", pattern="/projectList", viewId="/WEB-INF/views/projectList.xhtml"),
@@ -25,6 +23,7 @@ import java.util.Map;
 })
 public class ProjectController {
 
+    @ManagedProperty("#{param.projectId}")
     private String id;
 
     private String name;
@@ -47,18 +46,14 @@ public class ProjectController {
         return projects;
     }
 
-    public String editGet(){
-        return "projectEdit?faces-redirect=true";
-    }
-
-    public Project projectGet() {
-        Map<String, String> params = FacesContext.getCurrentInstance().
-                getExternalContext().getRequestParameterMap();
-        project = projectService.findOne(params.get("projectId"));
+    public Project getOneProject() {
+        if (id != null) {
+            project = projectService.findOne(id);
+        }
         return project;
     }
 
-    public String update() throws Exception {
+    public String update(String id) throws Exception {
         projectService.merge(id, name, description, dateStart, dateFinish, status);
         return "projectList?faces-redirect=true";
     }
@@ -72,4 +67,5 @@ public class ProjectController {
         projectService.remove(id);
         return "projectList?faces-redirect=true";
     }
+
 }
