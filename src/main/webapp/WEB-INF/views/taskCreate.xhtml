@@ -4,41 +4,31 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
-    <h:outputStylesheet library="css" name="edit-style.css"/>
+    <h:outputStylesheet library="css" name="signup-style.css"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 </h:head>
 <h:body>
-    <h:commandButton styleClass="signOut" action="#{userController.signOut}" value="Sign out"/>
-    <h:dataTable styleClass="container" >
-        <h:column>
-            <f:facet name="header">Name</f:facet>
-            <h:inputText styleClass="input" value="#{taskController.name}"/>
-        </h:column>
+    <f:metadata>
+        <f:viewParam name="projectId" value="#{taskController.projectId}" />
+    </f:metadata>
+    <div id="container">
+        <h:form styleClass="signup">
 
-        <h:column>
-            <f:facet name="header">Description</f:facet>
-            <h:inputText styleClass="input" value="#{taskController.description}"/>
-        </h:column>
+            <h:inputText type="text" styleClass="textIn" pt:placeholder="Name" value="#{taskController.name}"/>
 
-        <h:column>
-            <f:facet name="header">Date start</f:facet>
-            <h:inputText styleClass="input" value="#{taskController.dateStart}"/>
-        </h:column>
+            <h:inputText type="text" styleClass="textIn" pt:placeholder="Description" value="#{taskController.description}"/>
 
-        <h:column>
-            <f:facet name="header">Date finish</f:facet>
-            <h:inputText styleClass="input" value="#{taskController.dateFinish}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">Save</f:facet>
-            <h:form>
-                <h:commandLink action="#{taskController.update()}">
-                    <i class="material-icons" style="font-size:48px;color:#45D09E">save</i>
-                </h:commandLink>
-            </h:form>
-        </h:column>
-    </h:dataTable>
+            <h:inputText type="text" styleClass="textIn" pt:placeholder="Start date" value="#{taskController.dateStart}"/>
+
+            <h:inputText type="text" styleClass="textIn" pt:placeholder="Finish date" value="#{taskController.dateFinish}"/>
+
+            <h:commandButton value="Save" styleClass="submit" action="#{taskController.create()}">
+                <f:param name="projectId" value="#{taskController.projectId}"/>
+            </h:commandButton>
+        </h:form>
+    </div>
 </h:body>
 </html>

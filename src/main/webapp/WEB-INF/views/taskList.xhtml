@@ -12,55 +12,62 @@
 <h:body>
     <h:form>
         <h:commandButton styleClass="signOut" action="#{userController.signOut}" value="Sign out"/>
-        <h:commandButton styleClass="signOut" action="taskCreate?faces-redirect=true" value="Add task" />
+        <h:commandButton styleClass="signOut" action="#{taskController.editPage}" value="Add task" >
+        </h:commandButton>
     </h:form>
-    <h:dataTable styleClass="container" var="task" value="#{taskController.tasks}">
-        <h:column>
-            <f:facet name="header">Name</f:facet>
-            <h:outputText value="#{task.name}" />
-        </h:column>
+    <f:metadata>
+        <f:viewParam name="projectId" value="#{taskController.projectId}" />
+        <f:viewAction action="#{taskController.setTasksList()}" />
+    </f:metadata>
+    <h:form>
+        <h:dataTable styleClass="container" var="task" value="#{taskController.tasks}">
+            <h:column>
+                <f:facet name="header">Name</f:facet>
+                <h:outputText value="#{task.name}" />
+            </h:column>
 
-        <h:column>
-            <f:facet name="header">Description</f:facet>
-            <h:outputText value="#{task.description}" />
-        </h:column>
+            <h:column>
+                <f:facet name="header">Description</f:facet>
+                <h:outputText value="#{task.description}" />
+            </h:column>
 
-        <h:column>
-            <f:facet name="header">Date created</f:facet>
-            <h:outputText value="#{task.dateCreate}" />
-        </h:column>
+            <h:column>
+                <f:facet name="header">Date created</f:facet>
+                <h:outputText value="#{task.dateCreate}" />
+            </h:column>
 
-        <h:column>
-            <f:facet name="header">Date start</f:facet>
-            <h:outputText value="#{task.dateStart}" />
-        </h:column>
+            <h:column>
+                <f:facet name="header">Date start</f:facet>
+                <h:outputText value="#{task.dateStart}" />
+            </h:column>
 
-        <h:column>
-            <f:facet name="header">Date finish</f:facet>
-            <h:outputText value="#{task.dateFinish}" />
-        </h:column>
+            <h:column>
+                <f:facet name="header">Date finish</f:facet>
+                <h:outputText value="#{task.dateFinish}" />
+            </h:column>
 
-        <h:column>
-            <f:facet name="header">Status</f:facet>
-            <h:outputText value="#{task.status}" />
-        </h:column>
-        <h:column>
-            <f:facet name="header">Edit</f:facet>
-            <h:form>
-                <h:link outcome="taskEdit?faces-redirect=true" includeViewParams="true">
-                    <f:param id="taskId" value="#{task.id}"/>
-                    <i class="material-icons" style="font-size:48px;color:#45D09E">border_color</i>
-                </h:link>
-            </h:form>
-        </h:column>
-        <h:column>
-            <f:facet name="header">Delete</f:facet>
-            <h:form>
+            <h:column>
+                <f:facet name="header">Status</f:facet>
+                <h:outputText value="#{task.status}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">Edit</f:facet>
+                <h:form>
+                    <h:link outcome="taskEdit?faces-redirect=true" includeViewParams="true">
+                        <f:param name="taskId" value="#{task.id}"/>
+                        <i class="material-icons" style="font-size:48px;color:#45D09E">border_color</i>
+                    </h:link>
+                </h:form>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Delete</f:facet>
                 <h:commandLink action="#{taskController.remove(task.id)}">
+                    <f:param name="projectId" value="#{task.projectId}"/>
                     <i class="material-icons" style="font-size:48px;color:#E20338">delete_sweep</i>
                 </h:commandLink>
-            </h:form>
-        </h:column>
-    </h:dataTable>
+            </h:column>
+        </h:dataTable>
+    </h:form>
+
 </h:body>
 </html>

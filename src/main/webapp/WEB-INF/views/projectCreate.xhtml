@@ -7,40 +7,23 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
-    <h:outputStylesheet library="css" name="edit-style.css"/>
+    <h:outputStylesheet library="css" name="signup-style.css"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 </h:head>
 <h:body>
-    <h:form>
-        <h:commandButton styleClass="signOut" action="#{userController.signOut}" value="Sign out"/>
-        <h:dataTable class="container" var="project" value="#{projectController.project}">
-            <h:column>
-                <f:facet name="header">Name</f:facet>
-                <h:inputText styleClass="input" value="#{projectController.name}" autocomplete="off"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Description</f:facet>
-                <h:inputText styleClass="input" value="#{projectController.description}"/>
-            </h:column>
+    <div id="container">
+        <h:form styleClass="signup">
 
-            <h:column>
-                <f:facet name="header">Date start</f:facet>
-                <h:inputText styleClass="input" value="#{projectController.dateStart}"/>
-            </h:column>
+            <h:inputText type="text" styleClass="textIn" pt:placeholder="Name" value="#{projectController.name}"/>
 
-            <h:column>
-                <f:facet name="header">Date finish</f:facet>
-                <h:inputText styleClass="input" value="#{projectController.dateFinish}"/>
-            </h:column>
+            <h:inputText type="text" styleClass="textIn" pt:placeholder="Description" value="#{projectController.description}"/>
 
-            <h:column>
-                <f:facet name="header">Save</f:facet>
-                <h:commandLink action="#{projectController.create(userController.userId)}" >
-                    <i class="material-icons" style="font-size:48px;color:#45D09E">save</i>
-                </h:commandLink>
+            <h:inputText type="text" styleClass="textIn" pt:placeholder="Start date" value="#{projectController.dateStart}"/>
 
-            </h:column>
-        </h:dataTable>
-    </h:form>
+            <h:inputText type="text" styleClass="textIn" pt:placeholder="Finish date" value="#{projectController.dateFinish}"/>
+
+            <h:commandButton value="Save" styleClass="submit" action="#{projectController.create(userController.userId)}"/>
+        </h:form>
+    </div>
 </h:body>
 </html>

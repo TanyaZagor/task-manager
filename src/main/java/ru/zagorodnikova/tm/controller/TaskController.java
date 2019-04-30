@@ -23,7 +23,8 @@ import java.util.List;
 })
 public class TaskController {
 
-    @ManagedProperty("#{param.taskId}")
+    private String projectId;
+
     private String id;
 
     private String name;
@@ -43,27 +44,31 @@ public class TaskController {
     @ManagedProperty("#{taskService}")
     private ITaskService taskService;
 
-    public String setTasks(String projectId) {
+    public void setTasksList() {
+        System.out.println(projectId);
         tasks = taskService.findAllInProject(projectId);
-        return "taskList?faces-redirect=true";
     }
 
-    public String editGet(Task task){
-        return "taskEdit?faces-redirect=true";
+    public void getOneTask() {
+        task = taskService.findOne(id);
+    }
+
+    public String editPage() {
+        return "taskCreate?faces-redirect=true&includeViewParams=true";
     }
 
     public String update() throws Exception {
         taskService.merge(id, name, description, dateStart, dateFinish, status);
-        return "taskList?faces-redirect=true";
+        return "taskList?faces-redirect=true&includeViewParams=true";
     }
 
-    public String create(String projectId) throws Exception {
+    public String create() throws Exception {
         taskService.persist(projectId, name, description, dateStart, dateFinish);
-        return "taskList?faces-redirect=true";
+        return "taskList?faces-redirect=true&includeViewParams=true";
     }
 
     public String remove(String id) {
         taskService.remove(id);
-        return "taskList?faces-redirect=true";
+        return "taskList?faces-redirect=true&includeViewParams=true";
     }
 }

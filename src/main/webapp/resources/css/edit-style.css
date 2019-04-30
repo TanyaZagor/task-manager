@@ -66,6 +66,20 @@ h2 a {
     padding-left:1%;
 }
 
+.button {
+    margin-top: 25px;
+    float: right;
+    margin-right: 25px;
+    width: 10%;
+    border: 0;
+    background-color: #53CACE;
+    border-radius: 5px;
+    height: 50px;
+    color: white;
+    font-weight: 400;
+    font-size: 1em;
+}
+
 /* Background-color of the odd rows */
 .container tr:nth-child(odd) {
     background-color: #323C50;

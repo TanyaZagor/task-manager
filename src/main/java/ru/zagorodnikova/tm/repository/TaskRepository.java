@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface TaskRepository extends JpaRepository<Task, String> {
 
     @Nullable
+    @Modifying
     Task save(@NotNull Task task);
 
     void delete(@NotNull Task task);

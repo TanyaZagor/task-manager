@@ -39,6 +39,7 @@ public class TaskService implements ITaskService {
         if (dateStart == null || dateStart.isEmpty()) return null;
         if (dateFinish == null || dateFinish.isEmpty()) return null;
         Project project = projectRepository.findById(projectId).orElse(null);
+        if (project == null) return null;
         Task task = new Task();
         task.setUserId(project.getUserId());
         task.setProjectId(projectId);

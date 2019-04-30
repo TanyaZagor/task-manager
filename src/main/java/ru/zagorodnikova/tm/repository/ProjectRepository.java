@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface ProjectRepository extends JpaRepository<Project, String> {
 
     @Nullable
+    @Modifying
     Project save(@NotNull final Project project);
 
     void delete(@NotNull final Project project);

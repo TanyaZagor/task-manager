@@ -41,6 +41,20 @@ body {
     font-size: 1em;
 }
 
+.button {
+    margin-top: 25px;
+    float: right;
+    margin-right: 25px;
+    width: 10%;
+    border: 0;
+    background-color: #53CACE;
+    border-radius: 5px;
+    height: 50px;
+    color: white;
+    font-weight: 400;
+    font-size: 1em;
+}
+
 .textIn:focus {
     outline: none;
     border-color: #53CACE;

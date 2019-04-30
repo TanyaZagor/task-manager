@@ -7,47 +7,32 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
-    <h:outputStylesheet library="css" name="edit-style.css"/>
+    <h:outputStylesheet library="css" name="signup-style.css"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 </h:head>
 <h:body>
-    <h:commandButton styleClass="signOut" action="#{userController.signOut}" value="Sign out"/>
-    <h:dataTable styleClass="container" var="task" value="#{taskController.task}">
-        <h:column>
-            <f:facet name="header">Name</f:facet>
-            <h:inputText styleClass="input" pt:placeholder="#{task.name}" value="#{taskController.name}"/>
-        </h:column>
+    <f:metadata>
+        <f:viewParam name="taskId" value="#{taskController.id}" />
+        <f:viewParam name="projectId" value="#{taskController.projectId}" />
+        <f:viewAction action="#{taskController.getOneTask()}" />
+    </f:metadata>
+    <div id="container">
+        <h:form styleClass="signup">
 
-        <h:column>
-            <f:facet name="header">Description</f:facet>
-            <h:inputText styleClass="input" pt:placeholder="#{task.description}" value="#{taskController.description}"/>
-        </h:column>
+            <h:inputText type="text" styleClass="textIn" pt:placeholder="#{taskController.task.name}" value="#{taskController.name}"/>
 
-        <h:column>
-            <f:facet name="header">Date start</f:facet>
-            <h:inputText styleClass="input" pt:placeholder="#{task.dateStart}" value="#{taskController.dateStart}"/>
-        </h:column>
+            <h:inputText type="text" styleClass="textIn" pt:placeholder="#{taskController.task.description}" value="#{taskController.description}"/>
 
-        <h:column>
-            <f:facet name="header">Date finish</f:facet>
-            <h:inputText styleClass="input" pt:placeholder="#{task.dateFinish}" value="#{taskController.dateFinish}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">Status</f:facet>
-            <h:selectOneMenu value="#{taskController.status}" styleClass="input">
-                <f:selectItem itemLabel = "done" itemValue="done"/>
-                <f:selectItem itemLabel = "in progress" itemValue="in progress"/>
-                <f:selectItem itemLabel = "scheduled" itemValue="scheduled"/>
-            </h:selectOneMenu>
-        </h:column>
-        <h:column>
-            <f:facet name="header">Save</f:facet>
-            <h:form>
-                <h:commandLink action="#{taskController.update()}">
-                    <i class="material-icons" style="font-size:48px;color:#45D09E">save</i>
-                </h:commandLink>
-            </h:form>
-        </h:column>
-    </h:dataTable>
+            <h:inputText type="text" styleClass="textIn" pt:placeholder="#{taskController.task.dateStart}" value="#{taskController.dateStart}"/>
+
+            <h:inputText type="text" styleClass="textIn" pt:placeholder="#{taskController.task.dateFinish}" value="#{taskController.dateFinish}"/>
+
+            <h:inputText type="text" styleClass="textIn" pt:placeholder="#{taskController.task.status}" value="#{taskController.status}"/>
+
+            <h:commandButton value="Save" styleClass="submit" action="#{taskController.update()}">
+                <f:param name="projectId" value="#{taskController.projectId}"/>
+            </h:commandButton>
+        </h:form>
+    </div>
 </h:body>
 </html>

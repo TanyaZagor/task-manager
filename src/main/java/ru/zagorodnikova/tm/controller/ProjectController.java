@@ -23,7 +23,6 @@ import java.util.List;
 })
 public class ProjectController {
 
-    @ManagedProperty("#{param.projectId}")
     private String id;
 
     private String name;
@@ -46,15 +45,12 @@ public class ProjectController {
         return projects;
     }
 
-    public Project getOneProject() {
-        if (id != null) {
-            project = projectService.findOne(id);
-        }
-        return project;
+    public void getOneProject() {
+        project = projectService.findOne(id);
     }
 
-    public String update(String id) throws Exception {
-        projectService.merge(id, name, description, dateStart, dateFinish, status);
+    public String update() throws Exception {
+        projectService.merge(id, name, description, dateStart, dateFinish, "done");
         return "projectList?faces-redirect=true";
     }
 
