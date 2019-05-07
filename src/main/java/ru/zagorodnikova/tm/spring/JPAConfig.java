@@ -16,6 +16,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 //@PropertySource("classpath:application.properties")
+//@ComponentScan("ru.zagorodnikova.tm")
 @EnableJpaRepositories(basePackages = "ru.zagorodnikova.tm.repository")
 public class JPAConfig {
 
