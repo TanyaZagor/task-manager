@@ -3,6 +3,7 @@ package ru.zagorodnikova.tm.endpoint;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.zagorodnikova.tm.api.endpoint.IProjectEndpoint;
 import ru.zagorodnikova.tm.api.service.IProjectService;
 import ru.zagorodnikova.tm.entity.Project;
@@ -10,6 +11,7 @@ import ru.zagorodnikova.tm.entity.Project;
 import javax.jws.WebService;
 import java.util.List;
 
+@Service
 @WebService(endpointInterface = "ru.zagorodnikova.tm.api.endpoint.IProjectEndpoint")
 public class ProjectEndpoint implements IProjectEndpoint {
 

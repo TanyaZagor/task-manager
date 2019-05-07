@@ -2,6 +2,7 @@ package ru.zagorodnikova.tm.endpoint;
 
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.zagorodnikova.tm.api.endpoint.IUserEndpoint;
 import ru.zagorodnikova.tm.api.service.IUserService;
 import ru.zagorodnikova.tm.entity.User;
@@ -9,6 +10,7 @@ import ru.zagorodnikova.tm.entity.User;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
+@Service
 @WebService(endpointInterface = "ru.zagorodnikova.tm.api.endpoint.IUserEndpoint")
 public class UserEndpoint implements IUserEndpoint {
 

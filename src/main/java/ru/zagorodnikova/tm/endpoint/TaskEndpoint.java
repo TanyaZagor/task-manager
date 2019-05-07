@@ -3,6 +3,7 @@ package ru.zagorodnikova.tm.endpoint;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.zagorodnikova.tm.api.endpoint.ITaskEndpoint;
 import ru.zagorodnikova.tm.api.service.ITaskService;
 import ru.zagorodnikova.tm.entity.Task;
@@ -10,6 +11,7 @@ import ru.zagorodnikova.tm.entity.Task;
 import javax.jws.WebService;
 import java.util.List;
 
+@Service
 @WebService(endpointInterface = "ru.zagorodnikova.tm.api.endpoint.ITaskEndpoint")
 public class TaskEndpoint implements ITaskEndpoint {
 
