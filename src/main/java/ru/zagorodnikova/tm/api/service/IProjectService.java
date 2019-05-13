@@ -9,10 +9,10 @@ import java.util.List;
 public interface IProjectService {
     @Nullable
     Project persist(@NotNull final String userId,
-                           @Nullable final String name,
-                           @Nullable final String description,
-                           @Nullable final String dateStart,
-                           @Nullable final String dateFinish) throws Exception;
+                    @Nullable final String name,
+                    @Nullable final String description,
+                    @Nullable final String dateStart,
+                    @Nullable final String dateFinish) throws Exception;
 
     void remove(@NotNull final String id);
 

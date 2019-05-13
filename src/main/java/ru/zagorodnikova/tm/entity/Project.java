@@ -1,5 +1,6 @@
 package ru.zagorodnikova.tm.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -52,6 +53,7 @@ public class Project {
     @Enumerated(EnumType.STRING)
     private Status status = Status.SCHEDULED;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "projectId", orphanRemoval = true)
     private List<Task> tasks;
 
