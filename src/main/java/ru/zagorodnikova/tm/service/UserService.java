@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.zagorodnikova.tm.api.service.IUserService;
@@ -20,6 +21,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     @Nullable
@@ -47,11 +51,7 @@ public class UserService implements IUserService {
         if (email == null || email.isEmpty()) return null;
         User user = new User();
         user.setLogin(login);
-        try {
-            user.setPassword(password);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        user.setPassword(passwordEncoder.encode(password));
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);

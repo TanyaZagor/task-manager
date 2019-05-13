@@ -24,4 +24,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     List<User> findAll();
 
     Optional<User> findById(@NotNull final String id);
+
+    @Nullable
+    @Query(value = "SELECT user FROM User user WHERE user.login = :login")
+    User findByLogin(@NotNull @Param("login") final String login);
 }

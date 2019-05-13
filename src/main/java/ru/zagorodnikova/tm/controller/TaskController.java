@@ -45,7 +45,6 @@ public class TaskController {
     private ITaskService taskService;
 
     public void setTasksList() {
-        System.out.println(projectId);
         tasks = taskService.findAllInProject(projectId);
     }
 

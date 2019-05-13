@@ -11,10 +11,10 @@
 </h:head>
 <h:body>
     <h:form>
-        <h:commandButton styleClass="signOut" action="#{userController.signOut}" value="Sign out"/>
+        <h:commandButton styleClass="signOut" action="logout?faces-redirect=true" value="Sign out"/>
         <h:commandButton styleClass="signOut" action="projectCreate?faces-redirect=true" value="Add project" />
     </h:form>
-    <h:dataTable styleClass="container" var="project" value="#{projectController.projectList(userController.userId)}">
+    <h:dataTable styleClass="container" var="project" value="#{projectController.projectList()}">
         <h:column>
             <f:facet name="header">Name</f:facet>
             <h:form>

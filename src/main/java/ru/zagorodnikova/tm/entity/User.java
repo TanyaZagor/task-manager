@@ -59,8 +59,8 @@ public class User {
         }
     }
 
-    public void setPassword(@NotNull String password) throws Exception {
-        this.password = PasswordUtil.hashPassword(password);
+    public void setPassword(@NotNull String password) {
+        this.password = password;
     }
 
     @Override

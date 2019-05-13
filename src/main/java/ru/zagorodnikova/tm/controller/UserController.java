@@ -9,12 +9,12 @@ import ru.zagorodnikova.tm.entity.User;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 
 @Getter
 @Setter
 @ManagedBean
-@SessionScoped
+@RequestScoped
 @URLMappings(mappings = {
         @URLMapping(id="userSignIn", pattern="/userSignIn", viewId="/WEB-INF/views/userSignIn.xhtml"),
         @URLMapping(id="userSignUp", pattern="/userSignUp", viewId="/WEB-INF/views/userSignUp.xhtml")
@@ -43,16 +43,6 @@ public class UserController {
             return "projectList?faces-redirect=true";
         } else {
             return "userSignUp";
-        }
-    }
-
-    public String signIn() throws Exception {
-        User user = userService.signIn(login, password);
-        if (user != null) {
-            userId = user.getId();
-            return "projectList?faces-redirect=true";
-        } else {
-            return "userSignIn";
         }
     }
 

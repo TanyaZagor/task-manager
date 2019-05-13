@@ -44,6 +44,7 @@ public class ServiceConfiguration {
         endpoint.publish("/taskEndpoint");
         return endpoint;
     }
+
     @Bean
     public Endpoint publishUserEndpoint() {
         Endpoint endpoint = new EndpointImpl(springBus(),userEndpoint);

@@ -4,7 +4,12 @@ import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import ru.zagorodnikova.tm.api.service.IProjectService;
+import ru.zagorodnikova.tm.entity.CustomUserDetails;
 import ru.zagorodnikova.tm.entity.Project;
 
 import javax.faces.bean.ManagedBean;
@@ -40,8 +45,9 @@ public class ProjectController {
     @ManagedProperty("#{projectService}")
     private IProjectService projectService;
 
-    public List<Project> projectList(String userId) {
-        List<Project> projects = projectService.findAll(userId);
+    public List<Project> projectList() {
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Project> projects = projectService.findAll(userDetails.getUser().getId());
         return projects;
     }
 
@@ -54,8 +60,10 @@ public class ProjectController {
         return "projectList?faces-redirect=true";
     }
 
-    public String create(String userId) throws Exception {
-        projectService.persist(userId, name, description, dateStart, dateFinish);
+    public String create() throws Exception {
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(userDetails.getUser().getId());
+        projectService.persist(userDetails.getUser().getId(), name, description, dateStart, dateFinish);
         return "projectList?faces-redirect=true";
     }
 

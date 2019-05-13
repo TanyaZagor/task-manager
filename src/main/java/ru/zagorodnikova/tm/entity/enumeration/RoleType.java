@@ -1,8 +1,9 @@
 package ru.zagorodnikova.tm.entity.enumeration;
 
 import org.jetbrains.annotations.NotNull;
+import org.springframework.security.core.GrantedAuthority;
 
-public enum RoleType {
+public enum RoleType implements GrantedAuthority {
     ADMIN("admin"),
     USER("user");
 
@@ -17,5 +18,10 @@ public enum RoleType {
     @Override
     public String toString() {
         return this.displayName;
+    }
+
+    @Override
+    public String getAuthority() {
+        return this.toString();
     }
 }

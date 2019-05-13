@@ -11,12 +11,14 @@
     <h:outputStylesheet library="css" name="signup-style.css"/>
 </h:head>
 <h:body>
-    <div id="container">
-        <h:form styleClass="signup">
-            <h:inputText type="text" styleClass="textIn" pt:placeholder="Login" value="#{userController.login}"/>
-            <h:inputText type="text" styleClass="textIn" pt:placeholder="Password" value="#{userController.password}"/>
-            <h:commandButton value="Sign in" styleClass="submit" action="#{userController.signIn}"/>
-        </h:form>
+    <div id='container'>
+        <div >
+            <form action="userSignIn" method="POST" class='signup'>
+                <input type='text'  name="username" class="textIn"/>
+                <input type='text'  name="password" class="textIn"/>
+                <input type='submit' value='Sign in' name="submit" class="submit"/>
+            </form>
+        </div>
     </div>
 </h:body>
 </html>
