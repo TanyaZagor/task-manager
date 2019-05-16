@@ -10,9 +10,12 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 </h:head>
 <h:body>
+
     <h:form>
-        <h:commandButton styleClass="signOut" action="logout?faces-redirect=true" value="Sign out"/>
         <h:commandButton styleClass="signOut" action="projectCreate?faces-redirect=true" value="Add project" />
+        <button class="signOut" >
+            <a href="/app/logout">Sign out</a>
+        </button>
     </h:form>
     <h:dataTable styleClass="container" var="project" value="#{projectController.projectList()}">
         <h:column>

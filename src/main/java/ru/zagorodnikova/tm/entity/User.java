@@ -11,6 +11,7 @@ import ru.zagorodnikova.tm.entity.enumeration.RoleType;
 import ru.zagorodnikova.tm.util.PasswordUtil;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -21,7 +22,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name = "app_user")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class User {
+public class User implements Serializable {
 
     @Id
     @NotNull
