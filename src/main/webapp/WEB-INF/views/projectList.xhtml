@@ -12,10 +12,10 @@
 <h:body>
 
     <h:form>
-        <h:commandButton styleClass="signOut" action="projectCreate?faces-redirect=true" value="Add project" />
         <button class="signOut" >
             <a href="/app/logout">Sign out</a>
         </button>
+        <h:commandButton styleClass="signOut" action="projectCreate?faces-redirect=true" value="Add project" />
     </h:form>
     <h:dataTable styleClass="container" var="project" value="#{projectController.projectList()}">
         <h:column>

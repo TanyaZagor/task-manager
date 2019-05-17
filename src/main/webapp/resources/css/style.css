@@ -137,6 +137,7 @@ a {
     color: white;
     font-weight: 400;
     font-size: 1em;
+    text-decoration: none;
 }
 
 @media (max-width: 800px) {

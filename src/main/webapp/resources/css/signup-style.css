@@ -54,6 +54,10 @@ body {
     font-weight: 400;
     font-size: 1em;
 }
+.label {
+    text-align: left;
+    color: #1F2739;
+}
 
 .textIn:focus {
     outline: none;

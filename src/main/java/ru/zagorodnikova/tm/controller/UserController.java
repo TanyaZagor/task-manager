@@ -4,6 +4,7 @@ import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.zagorodnikova.tm.api.service.IUserService;
 import ru.zagorodnikova.tm.entity.User;
 
@@ -40,7 +41,7 @@ public class UserController {
         User user = userService.signUp(login, password, firstName, lastName, email);
         if (user != null) {
             userId = user.getId();
-            return "projectList?faces-redirect=true";
+            return "userSignIn?faces-redirect=true";
         } else {
             return "userSignUp";
         }

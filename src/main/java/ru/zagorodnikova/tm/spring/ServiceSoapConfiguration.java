@@ -15,7 +15,7 @@ import javax.xml.ws.Endpoint;
 
 @Configuration
 @ComponentScan("ru.zagorodnikova.tm")
-public class ServiceConfiguration {
+public class ServiceSoapConfiguration {
 
     @Bean(name = Bus.DEFAULT_BUS_ID)
     public SpringBus springBus() {

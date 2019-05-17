@@ -2,6 +2,7 @@ package ru.zagorodnikova.tm.api.endpoint;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.zagorodnikova.tm.dto.ProjectDto;
 import ru.zagorodnikova.tm.entity.Project;
 
 import javax.jws.WebMethod;
@@ -14,7 +15,7 @@ public interface IProjectEndpoint {
 
     @WebMethod
     @Nullable
-    Project persistProject(
+    ProjectDto persistProject(
             @WebParam(name = "userId") @NotNull final String userId,
             @WebParam(name = "name") @Nullable final String name,
             @WebParam(name = "description") @Nullable final String description,
@@ -29,14 +30,14 @@ public interface IProjectEndpoint {
 
     @WebMethod
     @Nullable
-    List<Project> findAllProjects(@WebParam(name = "userId") @NotNull final String userId);
+    List<ProjectDto> findAllProjects(@WebParam(name = "userId") @NotNull final String userId);
 
     @WebMethod
     @Nullable
-    Project findOneProject(@WebParam(name = "projectId") @NotNull final String projectId);
+    ProjectDto findOneProject(@WebParam(name = "projectId") @NotNull final String projectId);
 
     @WebMethod
-    Project mergeProject(
+    ProjectDto mergeProject(
             @WebParam(name = "projectId") @NotNull final String projectId,
             @WebParam(name = "name") @NotNull final String name,
             @WebParam(name = "description") @NotNull final String description,

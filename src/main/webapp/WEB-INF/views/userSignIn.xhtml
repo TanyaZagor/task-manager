@@ -14,9 +14,11 @@
     <div id='container'>
         <div >
             <form action="userSignIn" method="POST" class='signup'>
+                <h:outputText value="Login:" styleClass="label"/>
                 <input type='text'  name="username" class="textIn"/>
+                <h:outputText value="Password:" styleClass="label"/>
                 <input type='text'  name="password" class="textIn"/>
-                <input type='submit' value='Sign in' name="submit" class="submit"/>
+                <button type='submit' name="submit" class="submit">Sign in</button>
             </form>
         </div>
     </div>
